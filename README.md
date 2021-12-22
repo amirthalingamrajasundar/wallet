@@ -5,6 +5,8 @@ A simple wallet application that allows the following attacks and gives an insig
 * Path traversal.
 * Command injection.
 
+Refer [exploits](https://github.com/amirthalingamrajasundar/wallet/blob/master/exploits.md) for a list of exploits that use the above mentioned vulnerabilities.
+
 ## SQL Injection
 
 
