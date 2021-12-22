@@ -1,0 +1,26 @@
+services:
+    db:
+        image: mysql
+        volumes:
+            - ./db:/docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: wallet
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+        ports:
+            - 3307:3306
+    web:
+        depends_on:
+            - db
+        image: tomcat:9.0.54
+        volumes:
+            - ./wallet.war:/usr/local/tomcat/webapps/wallet.war
+            - ./Analyze.java:/usr/local/Analyze.java
+        ports:
+            - '8082:8080'
+        environment:
+            JDBC_URL: jdbc:mysql://db:3306/wallet?allowMultiQueries=true&sessionVariables=sql_mode='PIPES_AS_CONCAT'
+            JDBC_USER: root
+            JDBC_PASS: root
+            CLASSPATH: /usr/local/tomcat/webapps/wallet/WEB-INF/lib/mysql-connector-java-8.0.27.jar
